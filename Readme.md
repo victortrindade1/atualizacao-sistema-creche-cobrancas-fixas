@@ -274,3 +274,41 @@ Inseridas colunas `Refeicoes`, `Horas Extras`, `Outros` em `TabMens`.
 
 # Atualização: Inserir Descrição em Inserir Nova Receita (Painel Financeiro)
 
+Inserir campo `Descrição` no form `Form_RecExtra`.
+
+## Form_RecExtra 
+
+```diff
+- Private Sub tbox_valor_KeyDown(ByVal KeyCode As MSForms.ReturnInteger, ByVal Shift As Integer)
++ Private Sub tbox_desc_KeyDown(ByVal KeyCode As MSForms.ReturnInteger, ByVal Shift As Integer)
+    If KeyCode = 13 Then
+        KeyCode = 9
+    End If
+    If KeyCode = 9 Then ' Tab
+        Run "InserirNovaReceita"
+    End If
+End Sub
+```
+
+## Banco Receita Extra
+
+Inserida coluna `Descricao`.
+
+## Sub InserirNovaReceita()
+
+```diff
+    Dim recepcao As String
++    Dim desc As Variant
+    
+    recepcao = planLogin.Range("Home_user").Value
+    
++    desc = Form_RecExtra.tbox_desc.Value
+    
+    ' Insere dados
+    tb.DataBodyRange.Cells(row, 1).Value = CDate(data)
+    tb.DataBodyRange.Cells(row, 2).Value = val
+    tb.DataBodyRange.Cells(row, 3).Value = recepcao
++    tb.DataBodyRange.Cells(row, 4).Value = desc
+    
++    tb.ListColumns("Data").DataBodyRange.NumberFormat = "dd/mm/yyyy"
+```
