@@ -312,3 +312,29 @@ Inserida coluna `Descricao`.
     
 +    tb.ListColumns("Data").DataBodyRange.NumberFormat = "dd/mm/yyyy"
 ```
+
+# Backup
+
+## Sub RestaurarBackup()
+
+```diff
+     ' Validação: tem q começar com bkp. A versão anterior não é compatível
+-    If Left(nomeBackupRestaura, 3) <> "bkp" Then
++    If Left(nomeBackupRestaura, 3) <> "bk2" Then
+        MsgBox "Este backup é incompatível com a versão atual do sistema.", vbCritical, "Restaurar Backup"
+        ActiveWorkbook.Saved = True
+        ActiveWorkbook.Close
+        planConfig.Activate
+        Application.ScreenUpdating = True
+        Exit Sub
+    End If
+```
+
+## Sub Backup()
+
+```diff
+    ' Nome do Log de Backup
+    Dim nomeLog As String
+-    nomeLog = ActiveWorkbook.Path & "\Backup\bkp " & Day(Date) & "-" & Month(Date) & "-" & year
++    nomeLog = ActiveWorkbook.Path & "\Backup\bk2 " & Day(Date) & "-" & Month(Date) & "-" & year(Date) & ".xlsx"
+```
